@@ -61,7 +61,7 @@ public abstract class ServiciosForo {
     
 
     /**
-     * REJISTRA una nueva entrada al foro. El identificador de la EntradaForo sera
+     * REGISTRA una nueva entrada al foro. El identificador de la EntradaForo sera
      * asignado por el sistema una vez se haya registrado
      * @param f la nueva entrada al foro
      * @throws SQLException si f no tiene asociado su  usuario
