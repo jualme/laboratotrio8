@@ -16,6 +16,12 @@
  */
 package edu.eci.pdsw.samples.tests;
 
+import edu.eci.pdsw.samples.entities.Comentario;
+import edu.eci.pdsw.samples.entities.EntradaForo;
+import edu.eci.pdsw.samples.entities.Usuario;
+import edu.eci.pdsw.samples.services.ExcepcionServiciosForos;
+import edu.eci.pdsw.samples.services.ServiciosForoStub;
+import java.sql.Date;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -23,6 +29,15 @@ import static org.junit.Assert.*;
 /**
  *
  * @author hcadavid
+ * --- add new answer method (agregarRespuestaForo) ---
+ * CLASE DE EQUIVALENCIA 1: idforo no esta en los foros
+ * RETURN: Error
+ * 
+ * CLASE DE EQUIVALENCIA 2: idforo esta en los foros y el comentario tiene asociado un usuario
+ * RETURN: Accepted
+ * 
+ * CLASE DE EQUIVALENCIA 3: idforo esta en los foros y el comentario NO tiene asociado un usuario
+ * RETURN: Error
  */
 public class ComentariosTest {
     
@@ -33,9 +48,17 @@ public class ComentariosTest {
     public void setUp() {
     }
     
+    /**
+     * Clase de equivalencia 3
+     */
     @Test
     public void registroPacienteTest(){
-        
+        ServiciosForoStub sfs = new ServiciosForoStub();
+        try{
+            EntradaForo ef = sfs.consultarEntradaForo(0);
+            sfs.agregarRespuestaForo(0, new Comentario(null, "Porque no seca.", new Date(20,12,3)));
+            fail("Tiene que mostrar un error.");
+        } catch(ExcepcionServiciosForos e){}
     }
     
     
