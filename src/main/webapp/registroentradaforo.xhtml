@@ -1,11 +1,55 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3c.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
     <h:head></h:head>
 
     <h:body>
-        
+        <h:form id="form">
+            <p:growl id="msgs" showDetail="true" />
+            <p:panel >
+                <p:dataTable id="table" var = "foro" value="#{registroForo.foros}" selectionMode="single"
+                             selection="#{registroForo.foro}" rowKey="#{foro.identificador}">
+                    <p:ajax event="rowSelect" listener="#{registroForo.onRowSelect}" 
+                            update=":form:msgs"/>
+                    <p:ajax event="rowUnselect" listener="#{registroForo.onRowUnselect}" update=":form:msgs" />
+                    <f:facet name ="header">
+                        Forums :)
+                    </f:facet>
+                    <p:column>
+                        <f:facet name="header">
+                            Identification
+                        </f:facet>
+                            #{foro.identificador}
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">
+                            Tittle
+                        </f:facet>
+                            #{foro.titulo}
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">
+                            Description
+                        </f:facet>
+                            #{foro.comentario}
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">
+                            Author
+                        </f:facet>
+                            #{foro.autor.nombre}
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">
+                            Date
+                        </f:facet>
+                            #{foro.fechayHora.toString()}
+                    </p:column>
+                </p:dataTable>
+            </p:panel>
+        </h:form>
     </h:body>
 
 </html>

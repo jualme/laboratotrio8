@@ -76,7 +76,12 @@ public class ServiciosForoStub extends ServiciosForo{
 
     @Override
     public Usuario consultarUsuario(String email) throws ExcepcionServiciosForos {
-        return usuarios.get(email);
+        try{
+            return usuarios.get(email);
+        } catch(Exception e){
+            throw new ExcepcionServiciosForos(e.getMessage());
+        }
+        
     }
     
     

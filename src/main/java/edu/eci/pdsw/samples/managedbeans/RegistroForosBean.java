@@ -18,29 +18,58 @@ package edu.eci.pdsw.samples.managedbeans;
 
 
 import edu.eci.pdsw.samples.entities.Comentario;
+import edu.eci.pdsw.samples.entities.EntradaForo;
 import edu.eci.pdsw.samples.entities.Usuario;
+import edu.eci.pdsw.samples.services.ExcepcionServiciosForos;
 import edu.eci.pdsw.samples.services.ServiciosForo;
 import java.io.Serializable;
+import java.sql.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
-import javax.annotation.ManagedBean;
-import javax.enterprise.context.SessionScoped;
+import javax.faces.application.FacesMessage;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
+import org.primefaces.event.SelectEvent;
+import org.primefaces.event.UnselectEvent;
 
 /**
  *
  * @author hcadavid
  */
-@ManagedBean
+@ManagedBean(name = "registroForo")
 @SessionScoped
 public class RegistroForosBean implements Serializable{
     
     ServiciosForo sp=ServiciosForo.getInstance();
     Usuario user;
     Comentario coment;
+    EntradaForo foro;
+
+    public void setForo(EntradaForo foro) {
+        this.foro = foro;
+    }
+
+    public EntradaForo getForo() {
+        return foro;
+    }
+
+    public List<EntradaForo> getForos() throws ExcepcionServiciosForos{
+        return sp.consultarEntradasForo();
+    }
     
+    public void newForo(String email, String nombre, int identificador, Usuario autor, String comentario, String titulo, Date fechayHora) throws ExcepcionServiciosForos{
+        sp.registrarNuevaEntradaForo(new EntradaForo(identificador, sp.consultarUsuario(email), comentario, titulo, fechayHora));
+    }
     
+    public void onRowSelect(SelectEvent event) {
+        FacesMessage msg = new FacesMessage("Forum Selected", ((EntradaForo) event.getObject()).getTitulo());
+        FacesContext.getCurrentInstance().addMessage(null, msg);
+    }
     
-       
-    
-    
+    public void onRowUnselect(UnselectEvent event) {
+        FacesMessage msg = new FacesMessage("Forum Unselected", ((EntradaForo) event.getObject()).getTitulo());
+        FacesContext.getCurrentInstance().addMessage(null, msg);
+    }
 }
