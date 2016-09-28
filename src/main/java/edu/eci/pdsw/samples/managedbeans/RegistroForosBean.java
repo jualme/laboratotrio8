@@ -17,8 +17,12 @@
 package edu.eci.pdsw.samples.managedbeans;
 
 
+import edu.eci.pdsw.samples.entities.Comentario;
+import edu.eci.pdsw.samples.entities.Usuario;
 import edu.eci.pdsw.samples.services.ServiciosForo;
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 import javax.annotation.ManagedBean;
 import javax.enterprise.context.SessionScoped;
 
@@ -31,6 +35,12 @@ import javax.enterprise.context.SessionScoped;
 public class RegistroForosBean implements Serializable{
     
     ServiciosForo sp=ServiciosForo.getInstance();
+    Usuario user;
+    Comentario coment;
+    
+    
+    
+       
     
     
 }
