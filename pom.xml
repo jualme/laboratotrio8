@@ -31,6 +31,27 @@
             <artifactId>primefaces</artifactId>
             <version>5.0</version>
         </dependency>
+        <dependency>
+            <groupId>org.primefaces.extensions</groupId>
+            <artifactId>primefaces-extensions</artifactId>
+            <version>6.0.0</version>
+        </dependency>
+        <dependency>
+            <groupId>javax</groupId>
+            <artifactId>javaee-web-api</artifactId>
+            <version>7.0</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org2.pdsw.stubs</groupId>
+            <artifactId>ServicesFacadeStub</artifactId>
+            <version>1.2</version>            
+        </dependency>
+        <dependency>  
+            <groupId>org.primefaces.themes</groupId>  
+            <artifactId>all-themes</artifactId>  
+            <version>1.0.10</version>  
+        </dependency> 
 
         
         <dependency>
