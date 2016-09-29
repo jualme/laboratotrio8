@@ -119,7 +119,7 @@ public class RegistroForosBean implements Serializable{
         FacesContext.getCurrentInstance().addMessage(null, msg);
     }
     
-    public void submit(ActionEvent event) {
+    public void submit() {
         FacesMessage message = null;
         Date dt = new Date(java.util.Calendar.getInstance().getTime().getTime());
         try{

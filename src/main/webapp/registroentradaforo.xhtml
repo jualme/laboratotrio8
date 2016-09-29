@@ -48,6 +48,7 @@
                     </p:column>
                     <f:facet name="footer"> 
                         <p:commandButton value="Add New Forum" icon="ui-icon-circle-check" oncomplete="PF('detail').show()" actionListener="#{registroForo.clean()}" />
+                        <p:commandButton value="View Forum Selected" action="registrorespuestaforo.xhtml" />
                     </f:facet>
                 </p:dataTable>
                 <p:dialog header="New Forum" widgetVar="detail" modal="true" showEffect="explode" hideEffect="drop" resizable="true" width="500">
