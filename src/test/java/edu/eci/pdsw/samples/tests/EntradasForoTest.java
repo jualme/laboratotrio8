@@ -65,11 +65,9 @@ public class EntradasForoTest {
         EntradaForo ef = new EntradaForo();
         try{
             sf.registrarNuevaEntradaForo(ef);
-        }
-        catch (Exception e){
-            System.out.println(e.getMessage());
+            fail("No Ha retornado error sin usuario creado");
+        } catch (Exception e){
             assertTrue("No ha generado el error correcto", "No se tiene asosiado un usuario".equals(e.getMessage()));
         }
-        fail("No Ha retornado error sin usuario creado");
-    }    
+    }   
 }

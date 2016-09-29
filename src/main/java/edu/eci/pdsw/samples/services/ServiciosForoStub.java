@@ -62,7 +62,7 @@ public class ServiciosForoStub extends ServiciosForo{
             f.setIdentificador(foroidcount);            
             foroidcount++;
         }
-        if (f.getAutor().equals(null)){
+        if (f.getAutor() == null){
             throw new ExcepcionServiciosForos("No se tiene asosiado un usuario");
         }
         foros.put(f.getIdentificador(), f);        

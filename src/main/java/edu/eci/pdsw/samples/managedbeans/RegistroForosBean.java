@@ -144,7 +144,11 @@ public class RegistroForosBean implements Serializable{
         FacesMessage msg = new FacesMessage("Forum Unselected", ((EntradaForo) event.getObject()).getTitulo());
         FacesContext.getCurrentInstance().addMessage(null, msg);
     }
-    
+
+    public boolean puedeMostrar(){
+        return (foro != null);
+    }
+        
     public void submit() {
         FacesMessage message = null;
         Date dt = new Date(java.util.Calendar.getInstance().getTime().getTime());

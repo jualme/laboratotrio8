@@ -16,11 +16,13 @@
  */
 package edu.eci.pdsw.samples.entities;
 
+import java.io.Serializable;
+
 /**
  *
  * @author hcadavid
  */
-public class Usuario {
+public class Usuario implements Serializable {
     
     private String email;
     

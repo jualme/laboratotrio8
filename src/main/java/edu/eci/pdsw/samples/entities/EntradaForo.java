@@ -16,6 +16,7 @@
  */
 package edu.eci.pdsw.samples.entities;
 
+import java.io.Serializable;
 import java.sql.Date;
 import java.util.LinkedHashSet;
 import java.util.Set;
@@ -24,7 +25,7 @@ import java.util.Set;
  *
  * @author hcadavid
  */
-public class EntradaForo {
+public class EntradaForo implements Serializable {
     
     private int identificador;
     
