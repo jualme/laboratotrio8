@@ -52,6 +52,15 @@ public class RegistroForosBean implements Serializable{
     String emailUser;
     String commentUserForum;
     String tittleUserForum;
+    String commentaryForum;
+
+    public void setCommentaryForum(String CommentaryForum) {
+        this.commentaryForum = CommentaryForum;
+    }
+
+    public String getCommentaryForum() {
+        return commentaryForum;
+    }
 
     public void setFechaHoraUserForum(Date fechaHoraUserForum) {
         this.fechaHoraUserForum = fechaHoraUserForum;
@@ -99,6 +108,23 @@ public class RegistroForosBean implements Serializable{
 
     public EntradaForo getForo() {
         return foro;
+    }
+    
+    public Set<Comentario> getRespuestas() throws ExcepcionServiciosForos {
+        return sp.consultarEntradaForo(foro.getIdentificador()).getRespuestas();
+    }
+    
+    public void setRespuestas() throws ExcepcionServiciosForos{
+        FacesMessage message = null;
+        Date dt = new Date(java.util.Calendar.getInstance().getTime().getTime());
+        try{
+            Comentario cm = new Comentario(new Usuario(emailUser, nameUser),commentaryForum,dt);
+            sp.agregarRespuestaForo(foro.getIdentificador(),cm);
+            message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Success!", "The commentary has been added");
+        }catch(ExcepcionServiciosForos e){
+            message = new FacesMessage(FacesMessage.SEVERITY_WARN, "Error!!", "The commentary hasn't been added");
+        }
+        FacesContext.getCurrentInstance().addMessage(null, message);
     }
 
     public List<EntradaForo> getForos() throws ExcepcionServiciosForos{
