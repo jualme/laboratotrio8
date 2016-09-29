@@ -10,10 +10,9 @@
             <p:growl id="msgs" showDetail="true" />
             <p:panel >
                 <p:dataTable id="table" var = "foro" value="#{registroForo.foros}" selectionMode="single"
-                             selection="#{registroForo.foro}" rowKey="#{foro.identificador}">
+                             selection="#{registroForo.foro}" rowKey="#{foro.identificador}" >
                     <p:ajax event="rowSelect" listener="#{registroForo.onRowSelect}" 
-                            update=":form:msgs"/>
-                    <p:ajax event="rowUnselect" listener="#{registroForo.onRowUnselect}" update=":form:msgs" />
+                            update=":form:msgs" />
                     <f:facet name ="header">
                         Forums :)
                     </f:facet>
