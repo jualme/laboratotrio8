@@ -47,7 +47,29 @@
                         </f:facet>
                             #{foro.fechayHora.toString()}
                     </p:column>
+                    <f:facet name="footer"> 
+                        <p:commandButton value="Add New Forum" icon="ui-icon-circle-check" oncomplete="PF('detail').show()" actionListener="#{registroForo.clean()}" />
+                    </f:facet>
                 </p:dataTable>
+                <p:dialog header="New Forum" widgetVar="detail" modal="true" showEffect="explode" hideEffect="drop" resizable="true" width="500">
+                    <h:panelGrid columns="2" cellpadding="5">
+                        <h:outputLabel for="username" value="Username:" />
+                        <p:inputText id="username" value="#{registroForo.nameUser}" required="true" label="username" />
+
+                        <h:outputLabel for="emailUser" value="User Email:" />
+                        <p:inputText id="emailUser" value="#{registroForo.emailUser}" required="true" label="emailUser" />
+                        
+                        <h:outputLabel for="tittleForum" value="Tittle Forum:" />
+                        <p:inputText id="tittleForum" value="#{registroForo.tittleUserForum}" required="true" label="tittleForum" />
+
+                        <h:outputLabel for="commentForum" value="Comment Forum:" />
+                        <p:inputText id="commentForum" value="#{registroForo.commentUserForum}" required="true" label="commentForum" />
+                        
+                        <f:facet name="footer">
+                            <p:commandButton value="Submit" update=":form" oncomplete="PF('detail').hide()" actionListener="#{registroForo.submit}" />
+                        </f:facet>
+                    </h:panelGrid>
+                </p:dialog>
             </p:panel>
         </h:form>
     </h:body>

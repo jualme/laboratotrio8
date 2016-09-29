@@ -31,6 +31,8 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+import javax.faces.event.ActionEvent;
+import org.primefaces.context.RequestContext;
 import org.primefaces.event.SelectEvent;
 import org.primefaces.event.UnselectEvent;
 
@@ -43,9 +45,53 @@ import org.primefaces.event.UnselectEvent;
 public class RegistroForosBean implements Serializable{
     
     ServiciosForo sp=ServiciosForo.getInstance();
-    Usuario user;
+    Date fechaHoraUserForum;
     Comentario coment;
     EntradaForo foro;
+    String nameUser;
+    String emailUser;
+    String commentUserForum;
+    String tittleUserForum;
+
+    public void setFechaHoraUserForum(Date fechaHoraUserForum) {
+        this.fechaHoraUserForum = fechaHoraUserForum;
+    }
+
+    public void setNameUser(String nameUser) {
+        this.nameUser = nameUser;
+    }
+
+    public void setEmailUser(String emailUser) {
+        this.emailUser = emailUser;
+    }
+
+    public void setCommentUserForum(String commentUserForum) {
+        this.commentUserForum = commentUserForum;
+    }
+
+    public void setTittleUserForum(String tittleUserForum) {
+        this.tittleUserForum = tittleUserForum;
+    }
+
+    public String getNameUser() {
+        return nameUser;
+    }
+
+    public String getEmailUser() {
+        return emailUser;
+    }
+
+    public String getCommentUserForum() {
+        return commentUserForum;
+    }
+
+    public String getTittleUserForum() {
+        return tittleUserForum;
+    }
+
+    public Date getFechaHoraUserForum() {
+        return fechaHoraUserForum;
+    }
 
     public void setForo(EntradaForo foro) {
         this.foro = foro;
@@ -59,7 +105,7 @@ public class RegistroForosBean implements Serializable{
         return sp.consultarEntradasForo();
     }
     
-    public void newForo(String email, String nombre, int identificador, Usuario autor, String comentario, String titulo, Date fechayHora) throws ExcepcionServiciosForos{
+    public void newForo(String email, String nombre, int identificador, String comentario, String titulo, Date fechayHora) throws ExcepcionServiciosForos{
         sp.registrarNuevaEntradaForo(new EntradaForo(identificador, sp.consultarUsuario(email), comentario, titulo, fechayHora));
     }
     
@@ -71,5 +117,18 @@ public class RegistroForosBean implements Serializable{
     public void onRowUnselect(UnselectEvent event) {
         FacesMessage msg = new FacesMessage("Forum Unselected", ((EntradaForo) event.getObject()).getTitulo());
         FacesContext.getCurrentInstance().addMessage(null, msg);
+    }
+    
+    public void submit(ActionEvent event) {
+        FacesMessage message = null;
+        Date dt = new Date(java.util.Calendar.getInstance().getTime().getTime());
+        try{
+            sp.registrarNuevaEntradaForo(new EntradaForo(sp.consultarEntradasForo().size(), 
+                new Usuario(emailUser, nameUser), commentUserForum, tittleUserForum, dt));
+            message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Success!", "The forum has been added");
+        } catch(ExcepcionServiciosForos e){
+            message = new FacesMessage(FacesMessage.SEVERITY_WARN, "Error!!", "The forum hasn't been added");
+        }
+        FacesContext.getCurrentInstance().addMessage(null, message);
     }
 }
