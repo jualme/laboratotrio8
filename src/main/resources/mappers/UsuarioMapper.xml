@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="edu.eci.pdsw.samples.persistence.mybatisimpl.mappers.UsuarioMapper">
+    <resultMap type='Usuario' id='UsuarioResult'>
+        <id property='email' column='email'/>
+        <result property='nombre' column='nombre'/>   
+    </resultMap>
+    
+    <select id="getUsuario" resultMap="UsuarioResult" parameterType="map">
+        select email, nombre from USUARIOS Where email = #{emailusuario}
+    </select>
+    
+    <insert id="insertarUsuario">
+        INSERT INTO Usuarios VALUES (#{emailUsuario}, #{nombreUsuario})
+    </insert>
+</mapper>

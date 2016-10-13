@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="edu.eci.pdsw.samples.persistence.mybatisimpl.mappers.EntradaForoMapper">
+	     
+    <resultMap type='EntradaForo' id='EntradaForoResult'>
+        <id property='identificador' column='id'/>
+        <result property='titulo' column='contenido'/>
+        <result property='comentario' column='contenido'/>
+        <result property='fechayHora' column='fecha_hora'/>          
+        <association property="autor" javaType="Usuario" columnPrefix="autor_" resultMap='UsuarioResult'></association>      
+        <collection property='respuestas' ofType='Comentario' columnPrefix="cm_" resultMap='ComentarioResult'></collection>
+    </resultMap>
+
+    <resultMap type='Comentario' id='ComentarioResult'>
+        <result property='contenido' column='contenido'/>
+        <result property='fechayHora' column='fecha_hora'/> 
+        <association property="autor" javaType="Usuario" columnPrefix="autorcm_" resultMap='UsuarioResult'></association>      
+    </resultMap>
+
+    <resultMap type='Usuario' id='UsuarioResult'>
+        <id property='email' column='email'/>
+        <result property='nombre' column='nombre'/>   
+    </resultMap>
+
+    <select id="getEntradasForo" resultMap="EntradaForoResult">
+        select ef.id, ef.fecha_hora, ef.contenido, cm.id as cm_id, cm.fecha_hora as cm_fecha_hora, cm.contenido as cm_contenido, autor.nombre as autor_nombre, autor.email as autor_email, autorcom.nombre as cm_autorcm_nombre,  autorcom.email as cm_autorcm_email
+        from ENTRADAS_FOROS as ef 
+        LEFT JOIN COMENTARIOS as cm ON ef.id = cm.ENTRADAS_FOROS_id
+        INNER JOIN USUARIOS as autor ON autor.email=ef.USUARIOS_email
+        LEFT JOIN USUARIOS as autorcom ON autorcom.email=cm.USUARIOS_email
+    </select>
+    
+    <select id="getEntradaForo" resultMap="EntradaForoResult" parameterType="map">
+        select ef.id, ef.fecha_hora, ef.contenido, cm.id as cm_id, cm.fecha_hora as cm_fecha_hora, cm.contenido as cm_contenido, autor.nombre as autor_nombre, autor.email as autor_email, autorcom.nombre as cm_autorcm_nombre,  autorcom.email as cm_autorcm_email
+        from ENTRADAS_FOROS as ef 
+        LEFT JOIN COMENTARIOS as cm ON ef.id = cm.ENTRADAS_FOROS_id
+        INNER JOIN USUARIOS as autor ON autor.email=ef.USUARIOS_email
+        LEFT JOIN USUARIOS as autorcom ON autorcom.email=cm.USUARIOS_email
+        WHERE ef.id = #{idForo}
+    </select>
+    
+    <insert id="agregarComentarioAEntradaForo" parameterType="map">
+        INSERT INTO Comentarios (fecha_hora, contenido, ENTRADAS_FOROS_id, USUARIOS_email) 
+        VALUES (#{comentarioEntradaForo.getFechayHora()}, #{comentarioEntradaForo.getContenido()}, #{idEntradaForo}, #{comentarioEntradaForo.getAutor().getEmail()});
+        
+    </insert>
+  	
+</mapper>
